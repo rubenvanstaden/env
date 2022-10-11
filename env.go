@@ -13,11 +13,11 @@ func RpcAddr(key string) string {
         log.Fatalf("address env variable \"%s\" not set, usual", key)
 	}
 
-	re := regexp.MustCompile(ipAddress())
+	re := regexp.MustCompile(rpcAddress())
     match := re.MatchString(value)
 
     if !match {
-        log.Fatalf("invalid HTTP address env variable \"%s\"", key)
+        log.Fatalf("invalid RPC address env variable \"%s\"", key)
     }
 
 	return value
@@ -30,7 +30,7 @@ func HttpAddr(key string) string {
         log.Fatalf("address env variable \"%s\" not set, usual", key)
 	}
 
-    re := regexp.MustCompile(`http://` + ipAddress())
+    re := regexp.MustCompile(httpAddress())
     match := re.MatchString(value)
 
     if !match {

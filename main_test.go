@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	env "github.com/rubenvanstaden/env"
-	"github.com/rubenvanstaden/env/test"
+	"github.com/rubenvanstaden/test"
 )
 
 func TestUnit(t *testing.T) {
@@ -18,7 +18,7 @@ func TestUnit(t *testing.T) {
 
 	t.Run("Http", func(t *testing.T) {
 
-		v := env.RpcAddr("HTTP_LOCAL_URL")
+		v := env.HttpAddr("HTTP_LOCAL_URL")
 		test.Equals(t, "http://0.0.0.0:8081", v)
 
 	})
