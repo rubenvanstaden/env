@@ -1,4 +1,4 @@
-package main
+package env
 
 import (
 	"log"
@@ -36,6 +36,16 @@ func HttpAddr(key string) string {
     if !match {
         log.Fatalf("invalid HTTP address env variable \"%s\"", key)
     }
+
+	return value
+}
+
+func String(key string) string {
+
+    value, ok := os.LookupEnv(key)
+	if !ok {
+        log.Fatalf("address env variable \"%s\" not set, usual", key)
+	}
 
 	return value
 }

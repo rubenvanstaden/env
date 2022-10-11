@@ -1,4 +1,4 @@
-package main_test
+package env_test
 
 import (
 	"testing"
@@ -10,16 +10,17 @@ import (
 func TestUnit(t *testing.T) {
 
 	t.Run("Grpc", func(t *testing.T) {
-
 		v := env.RpcAddr("RPC_LOCAL_URL")
 		test.Equals(t, "0.0.0.0:8080", v)
-
 	})
 
 	t.Run("Http", func(t *testing.T) {
-
 		v := env.HttpAddr("HTTP_LOCAL_URL")
 		test.Equals(t, "http://0.0.0.0:8081", v)
+	})
 
+	t.Run("String", func(t *testing.T) {
+		v := env.String("MONGODB_URL")
+		test.Equals(t, "mongodb://admin:password@mongodb:27017", v)
 	})
 }
