@@ -6,18 +6,11 @@ import (
 	"regexp"
 )
 
-func RpcAddr(key string) string {
+func String(key string) string {
 
 	value, ok := os.LookupEnv(key)
 	if !ok {
-		log.Fatalf("Regex env variable \"%s\" not set, usual", key)
-	}
-
-	re := regexp.MustCompile(grpcRegex())
-	match := re.MatchString(value)
-
-	if !match {
-		log.Fatalf("Invalid RPC address env variable \"%s\"", key)
+		log.Fatalf("address env variable \"%s\" not set, usual", key)
 	}
 
 	return value
@@ -57,11 +50,35 @@ func WebsocketAddr(key string) string {
 	return value
 }
 
-func String(key string) string {
+func RpcAddr(key string) string {
 
 	value, ok := os.LookupEnv(key)
 	if !ok {
-		log.Fatalf("address env variable \"%s\" not set, usual", key)
+		log.Fatalf("Regex env variable \"%s\" not set, usual", key)
+	}
+
+	re := regexp.MustCompile(grpcRegex())
+	match := re.MatchString(value)
+
+	if !match {
+		log.Fatalf("Invalid RPC address env variable \"%s\"", key)
+	}
+
+	return value
+}
+
+func MongoAddr(key string) string {
+
+	value, ok := os.LookupEnv(key)
+	if !ok {
+		log.Fatalf("Regex env variable \"%s\" not set, usual", key)
+	}
+
+	re := regexp.MustCompile(mongoRegex())
+	match := re.MatchString(value)
+
+	if !match {
+		log.Fatalf("Invalid WS address env variable \"%s\"", key)
 	}
 
 	return value
