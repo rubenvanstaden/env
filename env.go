@@ -66,12 +66,3 @@ func String(key string) string {
 
 	return value
 }
-
-func Test(key string) string {
-
-	if value, ok := os.LookupEnv(key); ok {
-		return value
-	}
-
-	return ""
-}

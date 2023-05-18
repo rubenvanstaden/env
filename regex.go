@@ -12,13 +12,19 @@ func httpRegex() string {
 }
 
 func websocketRegex() string {
-	// Define a simple regex pattern for a ws or wss URL.
-	// Starts with ws:// or wss://
-	// Followed by: 
-	//   - One or more alphanumeric characters, hyphens or periods (the domain name and possibly subdomains)
-	//   - Optional :port number (one or more digits)
-	//   - The remainder of the URL, which can include alphanumeric characters, hyphens, periods, slashes, and a few other valid URL characters
-	return `^(ws://|wss://)?([a-zA-Z0-9-]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?(:[0-9]{1,5})?(\/.*)?$`
+
+    // scheme matches the optional ws:// or wss:// at the beginning.
+    scheme := `^(ws://|wss://)?`
+    // subdomains matches any number of optional subdomains, each ending with a dot.
+    subdomains := `([a-zA-Z0-9-]+\.)*`
+    // domain matches the domain name, which must contain at least one character before the dot, followed by a top-level domain of 2 to 6 characters.
+    domain := `[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?`
+    // port matches an optional :port part, where the port is 1 to 5 digits.
+    port := `(:[0-9]{1,5})?`
+    // path matches the remainder of the URL, which starts with a slash and can contain any characters.
+    path := `(\/.*)?$`
+
+    return scheme + subdomains + domain + port + path
 }
 
 func grpcRegex() string {
