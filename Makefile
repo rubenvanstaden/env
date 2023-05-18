@@ -3,13 +3,11 @@ SHELL := /bin/bash
 UNIT_TEST_PATH=./...
 
 fmt:
+	GOPROXY="" go mod tidy -compat=1.17
 	gofmt -l -s -w .
 
-tidy:
-	GOPROXY="" go mod tidy -compat=1.17
-
-test.unit:
+test:
 	go test -count=1 -run=Unit $(UNIT_TEST_PATH)
 
-test.unit.debug:
+debug:
 	go test -count=1 -run=Unit $(UNIT_TEST_PATH) -v
