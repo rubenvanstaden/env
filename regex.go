@@ -28,15 +28,14 @@ func websocketRegex() string {
 }
 
 func grpcRegex() string {
-	// Define a simple regex pattern for a gRPC address.
-	// It can be a domain name or an IP address, optionally followed by a port number.
-	// For domain names:
-	//   - One or more alphanumeric characters, hyphens or periods (the domain name and possibly subdomains)
-	//   - Optional :port number (one or more digits)
-	// For IP addresses:
-	//   - Four groups of one to three digits, separated by periods (IPv4)
-	//   - Optional :port number
-	return `^(([a-zA-Z0-9-]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?|(\d{1,3}\.){3}\d{1,3})(:[0-9]{1,5})?$`
+    // domainName matches a domain name, which can include one or more subdomains, each ending with a dot, followed by a domain name with at least one character before the dot and a top-level domain of 2 to 6 characters.
+    domainName := `(([a-zA-Z0-9-]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?)`
+    // ipAddress matches an IPv4 address, which is four groups of one to three digits separated by periods.
+    ipAddress := `((\d{1,3}\.){3}\d{1,3})`
+    // port matches an optional :port part, where the port is 1 to 5 digits.
+    port := `(:[0-9]{1,5})?$`
+
+    return "^" + domainName + "|" + ipAddress + port
 }
 
 func mongoRegex() string {
