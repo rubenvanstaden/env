@@ -1,14 +1,15 @@
 package env
 
 func httpRegex() string {
-	// Define a simple regex pattern for an http or https URL.
-	// Starts with http:// or https://
-	// Followed by: 
-	//   - One or more alphanumeric characters, hyphens or periods (the domain name and possibly subdomains)
-	//   - Optional :port number (one or more digits)
-	//   - The remainder of the URL, which can include alphanumeric characters, hyphens, periods, slashes, and a few other valid URL characters
-	//return `^(http://|https://)?([a-zA-Z0-9-]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?(:[0-9]{1,5})?(\/.*)?$`
-    return `^(http|https):\/\/[^\s/:]+(:[0-9]+)?$`
+
+    // scheme matches either http:// or https:// at the beginning of the string.
+    scheme := `^(http|https):\/\/`
+    // domainName matches one or more characters that are not whitespace, forward slash, or colon.
+    domainName := `[^\s/:]+`
+    // port matches an optional :port part, where the port is one or more digits.
+    port := `(:[0-9]+)?`
+
+    return scheme + domainName + port + "$"
 }
 
 func websocketRegex() string {
