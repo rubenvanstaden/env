@@ -34,12 +34,18 @@ func grpcRegex() string {
 }
 
 func mongoRegex() string {
-    // Starts with mongodb://
-    // Optionally includes username:password@
-    // Includes a hostname which can be a domain name (alphanumeric and hyphen characters plus optional periods) or an IP address
-    // Optionally includes :port
-    // Optionally includes additional hostname:port pairs, separated by commas
-    // Optionally includes /database
-    // Optionally includes ?options, with options as key=value pairs separated by &
-    return `^mongodb:\/\/([a-zA-Z0-9]+:[a-zA-Z0-9]+@)?([a-zA-Z0-9.-]+(:[0-9]+)?)(,[a-zA-Z0-9.-]+(:[0-9]+)?)*(/([a-zA-Z0-9]+)(\?[a-zA-Z0-9=&]+)?)?$`
+
+    // userPassword matches an optional username:password@ part.
+    userPassword := `([a-zA-Z0-9]+:[a-zA-Z0-9]+@)?`
+    // host matches the mandatory hostname:port part.
+    host := `([a-zA-Z0-9.-]+:[0-9]+)`
+    // additionalHosts matches any additional hostname:port pairs, separated by commas.
+    additionalHosts := `(,[a-zA-Z0-9.-]+:[0-9]+)*`
+    // database matches an optional /database part.
+    database := `(/([a-zA-Z0-9]+))?`
+    // options matches an optional ?options part.
+    options := `(\?[a-zA-Z0-9=&]+)?`
+
+    return "^mongodb:\\/\\/" + userPassword + host + additionalHosts + database + options + "$"
 }
+

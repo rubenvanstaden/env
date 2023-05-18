@@ -78,3 +78,51 @@ func TestUnit_Websocket(t *testing.T) {
         test.Equals(t, c.want, got)
 	}
 }
+
+func TestUnit_Mongo(t *testing.T) {
+
+	cases := []struct {
+        name string
+        addr string
+        want bool
+	}{
+		{
+            name: "Valid address",
+            addr: "mongodb://admin:password@mongodb:27017",
+            want: true,
+		},
+		{
+            name: "Valid username and password",
+            addr: "mongodb://mongodb:27017",
+            want: true,
+		},
+		{
+            name: "Valid port size 4",
+            addr: "mongodb://admin:password@mongodb:2701",
+            want: true,
+		},
+		{
+            name: "Valid port size 6",
+            addr: "mongodb://admin:password@mongodb:270178",
+            want: true,
+		},
+		{
+            name: "Invalid username and password",
+            addr: "mongodb://:@mongodb:27017",
+            want: false,
+		},
+		{
+            name: "Invalid Prefix",
+            addr: "mongo://admin:password@mongodb:27017",
+            want: false,
+		},
+	}
+
+	for _, c := range cases {
+        t.Run(c.name, func(t *testing.T) {
+            re := regexp.MustCompile(mongoRegex())
+            got := re.MatchString(c.addr)
+            test.Equals(t, c.want, got)
+        })
+	}
+}
