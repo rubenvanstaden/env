@@ -24,7 +24,7 @@ func HttpAddr(key string) string {
 	}
 
 	re := regexp.MustCompile(httpRegex())
-	match := re.MatchString("http://127.0.0.1:8080")
+	match := re.MatchString(value)
 
 	if !match {
 		log.Fatalf("Invalid HTTP address env variable \"%s\"", key)
